@@ -1,0 +1,23 @@
+I was given the task to use the idea of genetic algorithms to be able to solve a problem. The problem that I solved, granted it does not have real world applications, was to get it to figure out a string that the user put in. Since most of my stuff has been done with functional programming, I thought that this would be a good time to use object oriented programming to solve this problem. 
+
+The main idea of genetic algorithms is to have many entities of something, in this case it would be the random strings, and allow the most ‘fit’ entities to survive and reproduce. Doing over many iterations allows desired traits to be passed over, and hopefully will create an entity that is the most efficient in its task. This imitates natural section in evolution proposed by Charles Darwin.
+
+Coding this was split up into two parts, the first with coding the entity object followed by the population object. The entity object containes attributes relating to a single beings such as fitnessLevel, entityString, selectionForBreeding and the mutationRate. While the Population object contain attibutes targetString, topScore, topEntity, the vectors of entityPopulation and the breedingPopulation.
+
+The Entity is just a string with the same number of characters as the populations targetString. This ties in with what the fitness function, which is defined as the percentage of characters that are in the correct possition. An example of this would be where the targetString is “Cupcake” and the entity is “JupCake”, the fitnessLevel would be 71%. Something to note is that the function is case sensitive meaning, ‘C’ and ‘c’ are not the same character.
+
+The other attributes selectForBreeding and mutationRate are there to decide when a entity is going to reproduce and after reproducting, if there is going to be a mutation of some kind. The functions that handle these ideas will be done with in the population class 
+
+The The population consists of multiple entities which are stored with in the entity_pop vector. These entities are then selected and put into the breed_pop and then reproducted and then mutated.
+
+The selection function gives each entity with in the generation a fitness score, setting the "fittest" entity's score as the top_score and its string as top_entity.
+
+This is followed by setting each entity's selectForBreeding to either true or false if the entities fitness meets a threshold of 40% of the top entities score. I set it to be like this becuase if none of the entities scored higher then a base threshold the breeding population will be empty. This way there will always be entities that are put into the breeding population.
+
+The next step in the process to breed the entities that are the strongest in the generation. We need to first make the population an even number of entities so there isn't just one lone parent left. This is done by removing the lowest scoring enetitiy. Now that there is an even number of entities, parents are entities that adjacent in the vector.
+
+The goal of breeding was to be able to keep the correct characters. This was done by cycling through each character of both parents. If a match was found in either parent, that character would end up in the children. If neither parent's character is correct for a given index, the parent's characters would be swapped in the children.
+
+From above only the blue values persisted through the breeding with the other characters swapping over in the children. With the children now created, they are put into the "new" generation (in code, when breed is called the entity_pop vector is cleared).
+
+Since the entity_popwill no longer be the same length as the initial population. New children must be made so that the population size is consistent between generations. Here we take random parents from the breeding population and perform cross-over reproduction. This is where a random index is chosen to slice the parents and the two halves are swapped.
