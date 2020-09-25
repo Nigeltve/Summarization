@@ -18,7 +18,6 @@ dependencies:
   - mkl_fft=1.2.0=py38h45dec08_0
   - mkl_random=1.1.1=py38h47e9c7a_0
   - ninja=1.10.1=py38h7ef1ec2_0
-  - numpy-base=1.19.1=py38ha3acd2a_0
   - olefile=0.46=py_0
   - openssl=1.1.1g=he774522_1
   - pillow=7.2.0=py38hcc1f983_0
@@ -45,19 +44,21 @@ dependencies:
     - attrs==20.2.0
     - backcall==0.2.0
     - bleach==3.2.1
-    - boto3==1.15.2
-    - botocore==1.18.2
+    - blis==0.4.1
     - cachetools==4.1.1
+    - catalogue==1.0.0
     - cffi==1.14.3
     - chardet==3.0.4
     - click==7.1.2
     - colorama==0.4.3
+    - cymem==2.0.3
     - decorator==4.4.2
     - defusedxml==0.6.0
+    - en-core-web-sm==2.3.1
     - entrypoints==0.3
     - filelock==3.0.12
     - gast==0.3.3
-    - google-auth==1.21.2
+    - google-auth==1.21.3
     - google-auth-oauthlib==0.4.1
     - google-pasta==0.2.0
     - grpcio==1.32.0
@@ -69,7 +70,6 @@ dependencies:
     - ipywidgets==7.5.1
     - jedi==0.17.2
     - jinja2==2.11.2
-    - jmespath==0.10.0
     - joblib==0.16.0
     - json5==0.9.5
     - jsonschema==3.2.0
@@ -78,17 +78,17 @@ dependencies:
     - jupyterlab==2.2.8
     - jupyterlab-pygments==0.1.1
     - jupyterlab-server==1.2.0
+    - keras==2.4.3
     - keras-preprocessing==1.1.2
-    - langdetect==1.0.8
     - markdown==3.2.2
     - markupsafe==1.1.1
     - mistune==0.8.4
+    - murmurhash==1.0.2
     - nbclient==0.5.0
-    - nbconvert==6.0.4
+    - nbconvert==6.0.6
     - nbformat==5.0.7
     - nest-asyncio==1.4.0
     - networkx==2.5
-    - nlp-rake==0.0.2
     - nltk==3.5
     - notebook==6.1.4
     - numpy==1.18.5
@@ -99,6 +99,8 @@ dependencies:
     - pandocfilters==1.4.2
     - parso==0.7.1
     - pickleshare==0.7.5
+    - plac==1.1.3
+    - preshed==3.0.2
     - prometheus-client==0.8.0
     - prompt-toolkit==3.0.7
     - protobuf==3.13.0
@@ -111,40 +113,44 @@ dependencies:
     - pyrsistent==0.17.3
     - python-dateutil==2.8.1
     - pytz==2020.1
-    - pywin32==228
+    - pywin32==225
     - pywinpty==0.5.7
+    - pyyaml==5.3.1
     - pyzmq==19.0.2
     - rake-nltk==1.0.4
     - regex==2020.7.14
     - requests==2.24.0
     - requests-oauthlib==1.3.0
     - rsa==4.6
-    - s3transfer==0.3.3
     - sacremoses==0.0.43
     - scikit-learn==0.23.2
-    - scipy==1.4.1
+    - scipy==1.5.2
     - send2trash==1.5.0
     - sentencepiece==0.1.91
+    - spacy==2.3.2
     - speechrecognition==3.8.1
-    - tensorboard==2.2.2
+    - srsly==1.0.2
+    - tensorboard==2.3.0
     - tensorboard-plugin-wit==1.7.0
-    - tensorflow==2.2.0
-    - tensorflow-estimator==2.2.0
+    - tensorflow==2.3.1
+    - tensorflow-estimator==2.3.0
     - termcolor==1.1.0
     - terminado==0.9.1
     - testpath==0.4.4
+    - thinc==7.4.1
     - threadpoolctl==2.1.0
-    - tokenizers==0.8.0rc4
+    - tokenizers==0.8.1rc2
     - tornado==6.0.4
     - tqdm==4.49.0
     - traitlets==5.0.4
-    - transformers==3.0.0
+    - transformers==3.2.0
     - urllib3==1.25.10
+    - wasabi==0.8.0
     - wcwidth==0.2.5
     - webencodings==0.5.1
     - werkzeug==1.0.1
     - wget==3.2
     - widgetsnbextension==3.5.1
     - wrapt==1.12.1
-prefix: E:\Anaconda\envs\summarization
+prefix: C:\Users\nigel\anaconda3\envs\summarization
 
