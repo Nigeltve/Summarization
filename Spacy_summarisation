@@ -1,0 +1,367 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Spacy"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 195,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import spacy"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 196,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from spacy.lang.en.stop_words import STOP_WORDS\n",
+    "from string import punctuation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 197,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "stopwords = list(STOP_WORDS)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 198,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to progressively improve their performance on a specific task. Machine learning algorithms build a mathematical model of sample data, known as \"training data\", in order to make predictions or decisions without being explicitly programmed to perform the task. Machine learning algorithms are used in the applications of email filtering, detection of network intruders, and computer vision, where it is infeasible to develop an algorithm of specific instructions for performing the task. Machine learning is closely related to computational statistics, which focuses on making predictions using computers. The study of mathematical optimization delivers methods, theory and application domains to the field of machine learning. Data mining is a field of study within machine learning, and focuses on exploratory data analysis through unsupervised learning.In its application across business problems, machine learning is also referred to as predictive analytics.'"
+      ]
+     },
+     "execution_count": 198,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "document1 =\"\"\"Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to progressively improve their performance on a specific task. Machine learning algorithms build a mathematical model of sample data, known as \"training data\", in order to make predictions or decisions without being explicitly programmed to perform the task. Machine learning algorithms are used in the applications of email filtering, detection of network intruders, and computer vision, where it is infeasible to develop an algorithm of specific instructions for performing the task. Machine learning is closely related to computational statistics, which focuses on making predictions using computers. The study of mathematical optimization delivers methods, theory and application domains to the field of machine learning. Data mining is a field of study within machine learning, and focuses on exploratory data analysis through unsupervised learning.In its application across business problems, machine learning is also referred to as predictive analytics.\"\"\"\n",
+    "document1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 199,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Our Father who art in heaven, hallowed be thy name. Thy kingdom come. Thy will be done, on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil'"
+      ]
+     },
+     "execution_count": 199,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "document2 = \"\"\"Our Father who art in heaven, hallowed be thy name. Thy kingdom come. Thy will be done, on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil\"\"\"\n",
+    "document2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 201,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "There's always moments where you creep yourself out, and you think you heard something and you convince yourself that some spirit is in the room with you, but truly. I don't believe in any of that kind of thing. A lot of my friends really do.\n"
+     ]
+    }
+   ],
+   "source": [
+    "document3 = \"\"\"There's always moments where you creep yourself out, and you think you heard something and you convince yourself that some spirit is in the room with you, but truly. I don't believe in any of that kind of thing. A lot of my friends really do.\"\"\"\n",
+    "print(document3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 202,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "\"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\""
+      ]
+     },
+     "execution_count": 202,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "document4 = \"\"\"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\"\"\"\n",
+    "document4"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 203,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Machine learning is the science of getting computers to act without being explicitly programmed. In the past decade, machine learning has given us self-driving cars, practical speech recognition, effective web search, and a vastly improved understanding of the human genome. Machine learning is so pervasive today that you probably use it dozens of times a day without knowing it. Many researchers also think it is the best way to make progress towards human-level AI. In this class, you will learn about the most effective machine learning techniques, and gain practice implementing them and getting them to work for yourself. More importantly, you'll learn about not only the theoretical underpinnings of learning, but also gain the practical know-how needed to quickly and powerfully apply these techniques to new problems. Finally, you'll learn about some of Silicon Valley's best practices in innovation as it pertains to machine learning and AI.\n",
+      "This course provides a broad introduction to machine learning, datamining, and statistical pattern recognition. Topics include: (i) Supervised learning (parametric/non-parametric algorithms, support vector machines, kernels, neural networks). (ii) Unsupervised learning (clustering, dimensionality reduction, recommender systems, deep learning). (iii) Best practices in machine learning (bias/variance theory; innovation process in machine learning and AI). The course will also draw from numerous case studies and applications, so that you'll also learn how to apply learning algorithms to building smart robots (perception, control), text understanding (web search, anti-spam), computer vision, medical informatics, audio, database mining, and other areas.\n"
+     ]
+    }
+   ],
+   "source": [
+    "document5 = \"\"\"Machine learning is the science of getting computers to act without being explicitly programmed. In the past decade, machine learning has given us self-driving cars, practical speech recognition, effective web search, and a vastly improved understanding of the human genome. Machine learning is so pervasive today that you probably use it dozens of times a day without knowing it. Many researchers also think it is the best way to make progress towards human-level AI. In this class, you will learn about the most effective machine learning techniques, and gain practice implementing them and getting them to work for yourself. More importantly, you'll learn about not only the theoretical underpinnings of learning, but also gain the practical know-how needed to quickly and powerfully apply these techniques to new problems. Finally, you'll learn about some of Silicon Valley's best practices in innovation as it pertains to machine learning and AI.\n",
+    "This course provides a broad introduction to machine learning, datamining, and statistical pattern recognition. Topics include: (i) Supervised learning (parametric/non-parametric algorithms, support vector machines, kernels, neural networks). (ii) Unsupervised learning (clustering, dimensionality reduction, recommender systems, deep learning). (iii) Best practices in machine learning (bias/variance theory; innovation process in machine learning and AI). The course will also draw from numerous case studies and applications, so that you'll also learn how to apply learning algorithms to building smart robots (perception, control), text understanding (web search, anti-spam), computer vision, medical informatics, audio, database mining, and other areas.\"\"\"\n",
+    "print(document5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 204,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Because of new computing technologies, machine learning today is not like machine learning of the past. It was born from pattern recognition and the theory that computers can learn without being programmed to perform specific tasks; researchers interested in artificial intelligence wanted to see if computers could learn from data. The iterative aspect of machine learning is important because as models are exposed to new data, they are able to independently adapt. They learn from previous computations to produce reliable, repeatable decisions and results. It’s a science that’s not new – but one that has gained fresh momentum.\n"
+     ]
+    }
+   ],
+   "source": [
+    "document6 = \"\"\"Because of new computing technologies, machine learning today is not like machine learning of the past. It was born from pattern recognition and the theory that computers can learn without being programmed to perform specific tasks; researchers interested in artificial intelligence wanted to see if computers could learn from data. The iterative aspect of machine learning is important because as models are exposed to new data, they are able to independently adapt. They learn from previous computations to produce reliable, repeatable decisions and results. It’s a science that’s not new – but one that has gained fresh momentum.\"\"\"\n",
+    "print(document6)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 207,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "At a very high level, machine learning is the process of teaching a computer system how to make accurate predictions when fed data. Those predictions could be answering whether a piece of fruit in a photo is a banana or an apple, spotting people crossing the road in front of a self-driving car, whether the use of the word book in a sentence relates to a paperback or a hotel reservation, whether an email is spam, or recognizing speech accurately enough to generate captions for a YouTube video. The key difference from traditional computer software is that a human developer hasn't written code that instructs the system how to tell the difference between the banana and the apple. Instead a machine-learning model has been taught how to reliably discriminate between the fruits by being trained on a large amount of data, in this instance likely a huge number of images labelled as containing a banana or an apple.\n"
+     ]
+    }
+   ],
+   "source": [
+    "document7 = \"\"\"At a very high level, machine learning is the process of teaching a computer system how to make accurate predictions when fed data. Those predictions could be answering whether a piece of fruit in a photo is a banana or an apple, spotting people crossing the road in front of a self-driving car, whether the use of the word book in a sentence relates to a paperback or a hotel reservation, whether an email is spam, or recognizing speech accurately enough to generate captions for a YouTube video. The key difference from traditional computer software is that a human developer hasn't written code that instructs the system how to tell the difference between the banana and the apple. Instead a machine-learning model has been taught how to reliably discriminate between the fruits by being trained on a large amount of data, in this instance likely a huge number of images labelled as containing a banana or an apple.\"\"\"\n",
+    "print(document7)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 224,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "I was given the task to use the idea of genetic algorithms to be able to solve a problem. The problem that I solved, granted it does not have real world applications, was to get it to figure out a string that the user put in. Since most of my stuff has been done with functional programming, I thought that this would be a good time to use object oriented programming to solve this problem. \n",
+      "\n",
+      "The main idea of genetic algorithms is to have many entities of something, in this case it would be the random strings, and allow the most ‘fit’ entities to survive and reproduce. Doing over many iterations allows desired traits to be passed over, and hopefully will create an entity that is the most efficient in its task. This imitates natural section in evolution proposed by Charles Darwin.\n",
+      "\n",
+      "Coding this was split up into two parts, the first with coding the entity object followed by the population object. The entity object containes attributes relating to a single beings such as fitnessLevel, entityString, selectionForBreeding and the mutationRate. While the Population object contain attibutes targetString, topScore, topEntity, the vectors of entityPopulation and the breedingPopulation.\n",
+      "\n",
+      "The Entity is just a string with the same number of characters as the populations targetString. This ties in with what the fitness function, which is defined as the percentage of characters that are in the correct possition. An example of this would be where the targetString is “Cupcake” and the entity is “JupCake”, the fitnessLevel would be 71%. Something to note is that the function is case sensitive meaning, ‘C’ and ‘c’ are not the same character.\n",
+      "\n",
+      "The other attributes selectForBreeding and mutationRate are there to decide when a entity is going to reproduce and after reproducting, if there is going to be a mutation of some kind. The functions that handle these ideas will be done with in the population class \n",
+      "\n",
+      "The The population consists of multiple entities which are stored with in the entity_pop vector. These entities are then selected and put into the breed_pop and then reproducted and then mutated.\n",
+      "\n",
+      "The selection function gives each entity with in the generation a fitness score, setting the \"fittest\" entity's score as the top_score and its string as top_entity.\n",
+      "\n",
+      "This is followed by setting each entity's selectForBreeding to either true or false if the entities fitness meets a threshold of 40% of the top entities score. I set it to be like this becuase if none of the entities scored higher then a base threshold the breeding population will be empty. This way there will always be entities that are put into the breeding population.\n",
+      "\n",
+      "The next step in the process to breed the entities that are the strongest in the generation. We need to first make the population an even number of entities so there isn't just one lone parent left. This is done by removing the lowest scoring enetitiy. Now that there is an even number of entities, parents are entities that adjacent in the vector.\n",
+      "\n",
+      "The goal of breeding was to be able to keep the correct characters. This was done by cycling through each character of both parents. If a match was found in either parent, that character would end up in the children. If neither parent's character is correct for a given index, the parent's characters would be swapped in the children.\n",
+      "\n",
+      "From above only the blue values persisted through the breeding with the other characters swapping over in the children. With the children now created, they are put into the \"new\" generation (in code, when breed is called the entity_pop vector is cleared).\n",
+      "\n",
+      "Since the entity_popwill no longer be the same length as the initial population. New children must be made so that the population size is consistent between generations. Here we take random parents from the breeding population and perform cross-over reproduction. This is where a random index is chosen to slice the parents and the two halves are swapped.\n"
+     ]
+    }
+   ],
+   "source": [
+    "with open(\".\\\\testTexts\\\\GA.txt\", \"r\", encoding=\"utf8\") as file:\n",
+    "        document8 = file.read()\n",
+    "print(document8)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 215,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def getSummary(Document):\n",
+    "    extra_words = list(STOP_WORDS) + list(punctuation) + ['\\n']\n",
+    "    nlp = spacy.load('en_core_web_sm')\n",
+    "    doc = Document\n",
+    "    docx = nlp(doc)\n",
+    "\n",
+    "    all_words=[word.text for word in docx]\n",
+    "    Freq_word={}\n",
+    "    for w in all_words:\n",
+    "        w1=w.lower()\n",
+    "        if w1 not in extra_words and w1.isalpha():\n",
+    "            if w1 in Freq_word.keys():\n",
+    "                Freq_word[w1]+=1\n",
+    "            else:\n",
+    "                Freq_word[w1]=1\n",
+    "\n",
+    "    val=sorted(Freq_word.values())\n",
+    "    max_freq=val[-3:]\n",
+    "    \n",
+    "    for word in Freq_word.keys():\n",
+    "        Freq_word[word] = (Freq_word[word]/max_freq[-1])\n",
+    "\n",
+    "\n",
+    "    sent_strength={}\n",
+    "    for sent in docx.sents:\n",
+    "        for word in sent :\n",
+    "            if word.text.lower() in Freq_word.keys():\n",
+    "                if sent in sent_strength.keys():\n",
+    "                    sent_strength[sent]+=Freq_word[word.text.lower()]\n",
+    "                else:\n",
+    "                    sent_strength[sent]=Freq_word[word.text.lower()]\n",
+    "            else: \n",
+    "                continue\n",
+    "\n",
+    "    top_sentences=(sorted(sent_strength.values())[::-1])\n",
+    "    top30percent_sentence=int(0.3*len(top_sentences))\n",
+    "    top_sent=top_sentences[:top30percent_sentence]\n",
+    "\n",
+    "    summary=[]\n",
+    "    for sent,strength in sent_strength.items():\n",
+    "        if strength in top_sent:\n",
+    "            summary.append(sent)\n",
+    "        else:\n",
+    "            continue\n",
+    "    return summary\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 225,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Actual Text: I was given the task to use the idea of genetic algorithms to be able to solve a problem. The problem that I solved, granted it does not have real world applications, was to get it to figure out a string that the user put in. Since most of my stuff has been done with functional programming, I thought that this would be a good time to use object oriented programming to solve this problem. \n",
+      "\n",
+      "The main idea of genetic algorithms is to have many entities of something, in this case it would be the random strings, and allow the most ‘fit’ entities to survive and reproduce. Doing over many iterations allows desired traits to be passed over, and hopefully will create an entity that is the most efficient in its task. This imitates natural section in evolution proposed by Charles Darwin.\n",
+      "\n",
+      "Coding this was split up into two parts, the first with coding the entity object followed by the population object. The entity object containes attributes relating to a single beings such as fitnessLevel, entityString, selectionForBreeding and the mutationRate. While the Population object contain attibutes targetString, topScore, topEntity, the vectors of entityPopulation and the breedingPopulation.\n",
+      "\n",
+      "The Entity is just a string with the same number of characters as the populations targetString. This ties in with what the fitness function, which is defined as the percentage of characters that are in the correct possition. An example of this would be where the targetString is “Cupcake” and the entity is “JupCake”, the fitnessLevel would be 71%. Something to note is that the function is case sensitive meaning, ‘C’ and ‘c’ are not the same character.\n",
+      "\n",
+      "The other attributes selectForBreeding and mutationRate are there to decide when a entity is going to reproduce and after reproducting, if there is going to be a mutation of some kind. The functions that handle these ideas will be done with in the population class \n",
+      "\n",
+      "The The population consists of multiple entities which are stored with in the entity_pop vector. These entities are then selected and put into the breed_pop and then reproducted and then mutated.\n",
+      "\n",
+      "The selection function gives each entity with in the generation a fitness score, setting the \"fittest\" entity's score as the top_score and its string as top_entity.\n",
+      "\n",
+      "This is followed by setting each entity's selectForBreeding to either true or false if the entities fitness meets a threshold of 40% of the top entities score. I set it to be like this becuase if none of the entities scored higher then a base threshold the breeding population will be empty. This way there will always be entities that are put into the breeding population.\n",
+      "\n",
+      "The next step in the process to breed the entities that are the strongest in the generation. We need to first make the population an even number of entities so there isn't just one lone parent left. This is done by removing the lowest scoring enetitiy. Now that there is an even number of entities, parents are entities that adjacent in the vector.\n",
+      "\n",
+      "The goal of breeding was to be able to keep the correct characters. This was done by cycling through each character of both parents. If a match was found in either parent, that character would end up in the children. If neither parent's character is correct for a given index, the parent's characters would be swapped in the children.\n",
+      "\n",
+      "From above only the blue values persisted through the breeding with the other characters swapping over in the children. With the children now created, they are put into the \"new\" generation (in code, when breed is called the entity_pop vector is cleared).\n",
+      "\n",
+      "Since the entity_popwill no longer be the same length as the initial population. New children must be made so that the population size is consistent between generations. Here we take random parents from the breeding population and perform cross-over reproduction. This is where a random index is chosen to slice the parents and the two halves are swapped.\n",
+      "\n",
+      "\n",
+      "\n",
+      "Summary text :\n",
+      "The main idea of genetic algorithms is to have many entities of something, in this case it would be the random strings, and allow the most ‘fit’ entities to survive and reproduce.\n",
+      "Coding this was split up into two parts, the first with coding the entity object followed by the population object.\n",
+      "The entity object containes attributes relating to a single beings such as fitnessLevel, entityString, selectionForBreeding and the mutationRate.\n",
+      "The The population consists of multiple entities which are stored with in the entity_pop vector.\n",
+      "The selection function gives each entity with in the generation a fitness score, setting the \"fittest\" entity's score as the top_score and its string as top_entity.\n",
+      "\n",
+      "\n",
+      "This is followed by setting each entity's selectForBreeding to either true or false if the entities fitness meets a threshold of 40% of the top entities score.\n",
+      "I set it to be like this becuase if none of the entities scored higher then a base threshold the breeding population will be empty.\n",
+      "This way there will always be entities that are put into the breeding population.\n",
+      "\n",
+      "\n",
+      "We need to first make the population an even number of entities\n",
+      "Now that there is an even number of entities, parents are entities that adjacent in the vector.\n",
+      "\n",
+      "\n",
+      "If neither parent's character is correct for a given index, the parent's characters would be swapped in the children.\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "doc = document8\n",
+    "print(\"Actual Text: {}\\n\\n\\n\".format(doc))\n",
+    "\n",
+    "print(\"Summary text :\")\n",
+    "for i in getSummary(doc):\n",
+    "    print(i,end=\"\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
